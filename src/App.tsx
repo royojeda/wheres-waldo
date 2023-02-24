@@ -45,13 +45,12 @@ export default function App() {
   return (
     <div>
       <div className="select-none bg-neutral-800 p-4 sm:p-20">
-        <div className="relative">
+        <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
           <img
             src={image}
             alt=""
             draggable="false"
             onMouseDown={handleMouseDown}
-            className="mx-auto shadow-lg shadow-neutral-900"
           />
           {dialog.isShown && (
             <div
