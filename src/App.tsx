@@ -48,7 +48,7 @@ export default function App() {
 
   return (
     <div>
-      <div className="select-none bg-neutral-800 p-4 sm:p-20">
+      <main className="select-none bg-neutral-800 p-4 sm:p-20">
         <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
           <img
             src={image}
@@ -71,8 +71,8 @@ export default function App() {
             </div>
           )}
         </div>
-      </div>
-      <div className="bg-neutral-900 py-2 text-center text-neutral-400">
+      </main>
+      <footer className="bg-neutral-900 py-2 text-center text-neutral-400">
         Artwork -{" "}
         <a
           href="https://www.artstation.com/artwork/KrkJnG"
@@ -82,7 +82,7 @@ export default function App() {
         >
           &quot;A.D. 2.222&quot; by Egor Klyuchnyk
         </a>
-      </div>
+      </footer>
     </div>
   );
 }
