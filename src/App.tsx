@@ -7,9 +7,11 @@ import image from "./images/29ya069ug2f61.jpg";
 export default function App() {
   const [dialog, setDialog] = useState({
     isShown: false,
-    style: {
+    position: {
       left: 0,
       top: 0,
+    },
+    size: {
       width: 0,
       height: 0,
     },
@@ -31,9 +33,11 @@ export default function App() {
         const scaleFactor = 30;
         setDialog({
           isShown: true,
-          style: {
+          position: {
             left: offsetX - imageWidth / (2 * scaleFactor),
             top: offsetY - imageWidth / (2 * scaleFactor),
+          },
+          size: {
             width: imageWidth / scaleFactor,
             height: imageWidth / scaleFactor,
           },
@@ -53,15 +57,9 @@ export default function App() {
             onMouseDown={handleMouseDown}
           />
           {dialog.isShown && (
-            <div
-              style={{ left: dialog.style.left, top: dialog.style.top }}
-              className="absolute flex gap-1"
-            >
+            <div style={dialog.position} className="absolute flex gap-1">
               <div
-                style={{
-                  width: dialog.style.width,
-                  height: dialog.style.height,
-                }}
+                style={dialog.size}
                 className="border border-white bg-transparent sm:border-2"
               />
               <div className="flex flex-col gap-1 bg-neutral-600 p-1 text-neutral-300">
