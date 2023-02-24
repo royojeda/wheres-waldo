@@ -3,10 +3,11 @@ import image from "./images/29ya069ug2f61.jpg";
 export default function App() {
   return (
     <div>
-      <div className="bg-neutral-800 p-4 sm:p-20">
+      <div className="select-none bg-neutral-800 p-4 sm:p-20">
         <img
           src={image}
           alt=""
+          draggable="false"
           className="mx-auto shadow-lg shadow-neutral-900"
         />
       </div>
