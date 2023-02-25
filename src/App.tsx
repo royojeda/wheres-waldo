@@ -30,27 +30,17 @@ export default function App() {
       return;
     }
 
-    const { offsetX, offsetY } = event.nativeEvent;
-    const { clientWidth, clientHeight } = event.target as HTMLElement;
-
-    if (dialog.isShown) {
-      setDialog({
-        ...dialog,
-        isShown: false,
-      });
-    } else {
-      setDialog({
-        isShown: true,
-        imageSize: {
-          width: clientWidth,
-          height: clientHeight,
-        },
-        clickLocation: {
-          x: offsetX,
-          y: offsetY,
-        },
-      });
-    }
+    setDialog({
+      isShown: !dialog.isShown,
+      imageSize: {
+        width: (event.target as HTMLElement).clientWidth,
+        height: (event.target as HTMLElement).clientHeight,
+      },
+      clickLocation: {
+        x: event.nativeEvent.offsetX,
+        y: event.nativeEvent.offsetY,
+      },
+    });
   };
 
   return (
