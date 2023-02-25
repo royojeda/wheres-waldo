@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 import { useState } from "react";
-import AnswerButton from "./components/AnswerButton";
+import Dialog from "./components/Dialog";
 import image from "./images/29ya069ug2f61.jpg";
 
 export default function App() {
@@ -63,18 +63,7 @@ export default function App() {
         <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
           <img src={image} alt="" draggable="false" />
           {dialog.isShown && (
-            <div style={dialog.position} className="absolute flex gap-1">
-              <div
-                style={dialog.size}
-                className="border border-white bg-transparent sm:border-2"
-              />
-              <div className="flex flex-col gap-1 bg-neutral-600 p-1 text-neutral-300">
-                <AnswerButton name="Waldo" />
-                <AnswerButton name="Odlaw" />
-                <AnswerButton name="Wizard" />
-                <AnswerButton name="Wilma" />
-              </div>
-            </div>
+            <Dialog position={dialog.position} size={dialog.size} />
           )}
         </div>
       </main>
