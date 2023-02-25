@@ -17,7 +17,7 @@ export default function App() {
     },
   });
 
-  const handleMouseDown: React.MouseEventHandler = (event) => {
+  const handleMouseDownOnMain: React.MouseEventHandler = (event) => {
     if (event.button !== 0) {
       return;
     }
@@ -61,7 +61,7 @@ export default function App() {
   return (
     <div>
       <main
-        onMouseDown={handleMouseDown}
+        onMouseDown={handleMouseDownOnMain}
         className="select-none bg-neutral-800 p-4 sm:p-20"
       >
         <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
