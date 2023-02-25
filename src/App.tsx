@@ -44,7 +44,7 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div onContextMenu={(e) => e.preventDefault()}>
       <main
         onMouseDown={handleMouseDownOnMain}
         className="select-none bg-neutral-800 p-4 sm:p-20"
