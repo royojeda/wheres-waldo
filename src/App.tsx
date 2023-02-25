@@ -18,44 +18,50 @@ export default function App() {
   });
 
   const handleMouseDown: React.MouseEventHandler = (event) => {
-    if (event.target === event.currentTarget && event.button === 0) {
-      const { offsetX, offsetY } = event.nativeEvent;
-      const { clientWidth: imageWidth, clientHeight: imageHeight } =
-        event.currentTarget;
-      console.clear();
-      console.log("X:", offsetX / imageWidth, "Y:", offsetY / imageHeight);
-      if (dialog.isShown) {
-        setDialog({
-          ...dialog,
-          isShown: false,
-        });
-      } else {
-        const scaleFactor = 30;
-        setDialog({
-          isShown: true,
-          position: {
-            left: offsetX - imageWidth / (2 * scaleFactor),
-            top: offsetY - imageWidth / (2 * scaleFactor),
-          },
-          size: {
-            width: imageWidth / scaleFactor,
-            height: imageWidth / scaleFactor,
-          },
-        });
-      }
+    if (event.button !== 0) {
+      return;
+    }
+
+    if (event.currentTarget === event.target && !dialog.isShown) {
+      return;
+    }
+
+    const { offsetX, offsetY } = event.nativeEvent;
+    const { clientWidth: imageWidth, clientHeight: imageHeight } =
+      event.currentTarget;
+
+    console.clear();
+    console.log("X:", offsetX / imageWidth, "Y:", offsetY / imageHeight);
+
+    if (dialog.isShown) {
+      setDialog({
+        ...dialog,
+        isShown: false,
+      });
+    } else {
+      const scaleFactor = 30;
+      setDialog({
+        isShown: true,
+        position: {
+          left: offsetX - imageWidth / (2 * scaleFactor),
+          top: offsetY - imageWidth / (2 * scaleFactor),
+        },
+        size: {
+          width: imageWidth / scaleFactor,
+          height: imageWidth / scaleFactor,
+        },
+      });
     }
   };
 
   return (
     <div>
-      <main className="select-none bg-neutral-800 p-4 sm:p-20">
+      <main
+        onMouseDown={handleMouseDown}
+        className="select-none bg-neutral-800 p-4 sm:p-20"
+      >
         <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
-          <img
-            src={image}
-            alt=""
-            draggable="false"
-            onMouseDown={handleMouseDown}
-          />
+          <img src={image} alt="" draggable="false" />
           {dialog.isShown && (
             <div style={dialog.position} className="absolute flex gap-1">
               <div
