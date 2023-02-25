@@ -1,17 +1,32 @@
 import AnswerButton from "./AnswerButton";
 
 interface DialogProps {
-  position: {
-    left: number;
-    top: number;
-  };
-  size: {
+  imageSize: {
     width: number;
     height: number;
   };
+  clickLocation: {
+    x: number;
+    y: number;
+  };
 }
 
-export default function Dialog({ position, size }: DialogProps) {
+export default function Dialog({
+  imageSize: { width: imageWidth, height: imageHeight },
+  clickLocation,
+}: DialogProps) {
+  const SCALE_FACTOR = 30;
+
+  const position = {
+    left: clickLocation.x - imageWidth / (2 * SCALE_FACTOR),
+    top: clickLocation.y - imageWidth / (2 * SCALE_FACTOR),
+  };
+
+  const size = {
+    width: imageWidth / SCALE_FACTOR,
+    height: imageWidth / SCALE_FACTOR,
+  };
+
   return (
     <div style={position} className="absolute flex gap-1">
       <div

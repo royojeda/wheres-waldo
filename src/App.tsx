@@ -7,11 +7,11 @@ import image from "./images/29ya069ug2f61.jpg";
 export default function App() {
   const [dialog, setDialog] = useState({
     isShown: false,
-    position: {
-      left: 0,
-      top: 0,
+    clickLocation: {
+      x: 0,
+      y: 0,
     },
-    size: {
+    imageSize: {
       width: 0,
       height: 0,
     },
@@ -31,11 +31,7 @@ export default function App() {
     }
 
     const { offsetX, offsetY } = event.nativeEvent;
-    const { clientWidth: imageWidth, clientHeight: imageHeight } =
-      event.currentTarget;
-
-    console.clear();
-    console.log("X:", offsetX / imageWidth, "Y:", offsetY / imageHeight);
+    const { clientWidth, clientHeight } = event.target as HTMLElement;
 
     if (dialog.isShown) {
       setDialog({
@@ -43,16 +39,15 @@ export default function App() {
         isShown: false,
       });
     } else {
-      const scaleFactor = 30;
       setDialog({
         isShown: true,
-        position: {
-          left: offsetX - imageWidth / (2 * scaleFactor),
-          top: offsetY - imageWidth / (2 * scaleFactor),
+        imageSize: {
+          width: clientWidth,
+          height: clientHeight,
         },
-        size: {
-          width: imageWidth / scaleFactor,
-          height: imageWidth / scaleFactor,
+        clickLocation: {
+          x: offsetX,
+          y: offsetY,
         },
       });
     }
@@ -67,7 +62,10 @@ export default function App() {
         <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
           <img src={image} alt="" draggable="false" />
           {dialog.isShown && (
-            <Dialog position={dialog.position} size={dialog.size} />
+            <Dialog
+              clickLocation={dialog.clickLocation}
+              imageSize={dialog.imageSize}
+            />
           )}
         </div>
       </main>
