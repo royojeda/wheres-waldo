@@ -27,6 +27,19 @@ export default function Dialog({
     height: imageWidth / SCALE_FACTOR,
   };
 
+  const handleSubmitAnswer = (name: string) => {
+    console.clear();
+    console.log(
+      "X:",
+      clickLocation.x / imageWidth,
+      "Y:",
+      clickLocation.y / imageHeight
+    );
+    console.log(name);
+    console.log(clickLocation.x / imageWidth);
+    console.log(clickLocation.y / imageHeight);
+  };
+
   return (
     <div style={position} className="absolute flex gap-1">
       <div
@@ -34,10 +47,10 @@ export default function Dialog({
         className="border border-white bg-transparent sm:border-2"
       />
       <div className="flex flex-col gap-1 bg-neutral-600 p-1 text-neutral-300">
-        <AnswerButton name="Waldo" />
-        <AnswerButton name="Odlaw" />
-        <AnswerButton name="Wizard" />
-        <AnswerButton name="Wilma" />
+        <AnswerButton name="Waldo" onClick={handleSubmitAnswer} />
+        <AnswerButton name="Odlaw" onClick={handleSubmitAnswer} />
+        <AnswerButton name="Wizard" onClick={handleSubmitAnswer} />
+        <AnswerButton name="Wilma" onClick={handleSubmitAnswer} />
       </div>
     </div>
   );
