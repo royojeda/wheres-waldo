@@ -68,14 +68,14 @@ export default function App() {
         </div>
       </main>
       <footer className="bg-neutral-900 py-2 text-center text-neutral-400">
-        Artwork -{" "}
+        {`Artwork - `}
         <a
           href="https://www.artstation.com/artwork/KrkJnG"
           target="_blank"
           className="underline"
           rel="noreferrer"
         >
-          &quot;A.D. 2.222&quot; by Egor Klyuchnyk
+          {`"A.D. 2.222" by Egor Klyuchnyk`}
         </a>
       </footer>
     </div>
