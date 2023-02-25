@@ -26,6 +26,10 @@ export default function App() {
       return;
     }
 
+    if ((event.target as HTMLElement).tagName === "BUTTON") {
+      return;
+    }
+
     const { offsetX, offsetY } = event.nativeEvent;
     const { clientWidth: imageWidth, clientHeight: imageHeight } =
       event.currentTarget;
