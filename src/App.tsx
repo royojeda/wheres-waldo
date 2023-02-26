@@ -43,6 +43,14 @@ export default function App() {
     });
   };
 
+  const handleSubmitAnswer = async (name: string) => {
+    console.log(
+      name,
+      dialog.clickLocation.x / dialog.imageSize.width,
+      dialog.clickLocation.y / dialog.imageSize.height
+    );
+  };
+
   return (
     <div onContextMenu={(e) => e.preventDefault()}>
       <main
@@ -53,6 +61,7 @@ export default function App() {
           <img src={image} alt="" draggable="false" />
           {dialog.isShown && (
             <Dialog
+              onSubmit={handleSubmitAnswer}
               clickLocation={dialog.clickLocation}
               imageSize={dialog.imageSize}
             />
