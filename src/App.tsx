@@ -30,6 +30,14 @@ export default function App() {
       return;
     }
 
+    console.clear();
+    console.log(
+      "X:",
+      event.nativeEvent.offsetX / (event.target as HTMLElement).clientWidth,
+      "Y:",
+      event.nativeEvent.offsetY / (event.target as HTMLElement).clientHeight
+    );
+
     setDialog({
       isShown: !dialog.isShown,
       imageSize: {
@@ -44,11 +52,17 @@ export default function App() {
   };
 
   const handleSubmitAnswer = async (name: string) => {
-    console.log(
-      name,
-      dialog.clickLocation.x / dialog.imageSize.width,
-      dialog.clickLocation.y / dialog.imageSize.height
-    );
+    setDialog({
+      ...dialog,
+      isShown: false,
+    });
+    console.log(name);
+    const url = `/characters?name=${name}&x_coordinate=${
+      dialog.clickLocation.x / dialog.imageSize.width
+    }&y_coordinate=${dialog.clickLocation.y / dialog.imageSize.height}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.table(data);
   };
 
   return (
