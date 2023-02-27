@@ -1,5 +1,3 @@
-import AnswerButton from "./AnswerButton";
-
 interface DialogProps {
   imageSize: {
     width: number;
@@ -9,13 +7,14 @@ interface DialogProps {
     x: number;
     y: number;
   };
-  onSubmit: (name: string) => void;
+  // eslint-disable-next-line react/require-default-props
+  children?: React.ReactNode;
 }
 
 export default function Dialog({
   imageSize: { width: imageWidth },
   clickLocation,
-  onSubmit,
+  children,
 }: DialogProps) {
   const SCALE_FACTOR = 30;
 
@@ -36,10 +35,7 @@ export default function Dialog({
         className="border border-white bg-transparent sm:border-2"
       />
       <div className="flex flex-col gap-1 bg-neutral-600 p-1 text-neutral-300">
-        <AnswerButton name="Waldo" onClick={onSubmit} />
-        <AnswerButton name="Odlaw" onClick={onSubmit} />
-        <AnswerButton name="Wizard" onClick={onSubmit} />
-        <AnswerButton name="Wilma" onClick={onSubmit} />
+        {children}
       </div>
     </div>
   );

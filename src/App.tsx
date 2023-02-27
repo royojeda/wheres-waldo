@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
 import { useState } from "react";
+import AnswerButton from "./components/AnswerButton";
 import Dialog from "./components/Dialog";
 import image from "./images/29ya069ug2f61.jpg";
 
@@ -51,7 +52,7 @@ export default function App() {
     });
   };
 
-  const handleSubmitAnswer = async (name: string) => {
+  const handleAnswerClick = async (name: string) => {
     setDialog({
       ...dialog,
       isShown: false,
@@ -75,10 +76,14 @@ export default function App() {
           <img src={image} alt="" draggable="false" />
           {dialog.isShown && (
             <Dialog
-              onSubmit={handleSubmitAnswer}
               clickLocation={dialog.clickLocation}
               imageSize={dialog.imageSize}
-            />
+            >
+              <AnswerButton name="Waldo" onClick={handleAnswerClick} />
+              <AnswerButton name="Odlaw" onClick={handleAnswerClick} />
+              <AnswerButton name="Wizard" onClick={handleAnswerClick} />
+              <AnswerButton name="Wilma" onClick={handleAnswerClick} />
+            </Dialog>
           )}
         </div>
       </main>
