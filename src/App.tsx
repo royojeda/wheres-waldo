@@ -71,6 +71,11 @@ export default function App() {
 
   return (
     <div onContextMenu={(e) => e.preventDefault()}>
+      <header className="flex justify-around bg-neutral-900 py-2 text-neutral-400">
+        {characters.map((character) => (
+          <div key={character.id}>{character.name}</div>
+        ))}
+      </header>
       <main
         onMouseDown={handleMouseDownOnMain}
         className="select-none bg-neutral-800 p-4 sm:p-20"
