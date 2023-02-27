@@ -69,11 +69,32 @@ export default function App() {
     console.table(data);
   };
 
+  const imageFor = (imageName: string) => {
+    let imageSource = "";
+    try {
+      // eslint-disable-next-line global-require, import/no-dynamic-require
+      imageSource = require(`./images/${imageName}.png`);
+    } catch (error) {
+      console.log(error);
+    }
+    return imageSource;
+  };
+
   return (
     <div onContextMenu={(e) => e.preventDefault()}>
-      <header className="flex justify-around bg-neutral-900 py-2 text-neutral-400">
+      <header className="flex justify-center gap-2 bg-neutral-900 py-2 text-neutral-400 sm:gap-4">
         {characters.map((character) => (
-          <div key={character.id}>{character.name}</div>
+          <div
+            key={character.id}
+            className="div flex flex-col items-center justify-end gap-4 p-4"
+          >
+            <img
+              src={imageFor(character.name)}
+              alt=""
+              className="w-10 sm:w-20"
+            />
+            <div>{character.name}</div>
+          </div>
         ))}
       </header>
       <main
