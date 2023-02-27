@@ -82,18 +82,14 @@ export default function App() {
 
   return (
     <div onContextMenu={(e) => e.preventDefault()}>
-      <header className="flex justify-center gap-2 bg-neutral-900 py-2 text-neutral-400 sm:gap-4">
+      <header className="relative flex justify-center gap-4 bg-neutral-900 p-4 text-neutral-400 sm:gap-4 md:gap-8">
         {characters.map((character) => (
           <div
             key={character.id}
-            className="div flex flex-col items-center justify-end gap-4 p-4"
+            className="div flex w-16 flex-col items-center gap-4 sm:w-20"
           >
-            <img
-              src={imageFor(character.name)}
-              alt=""
-              className="w-10 sm:w-20"
-            />
-            <div>{character.name}</div>
+            <img src={imageFor(character.name)} alt="" className="" />
+            <div className="text-center">{character.name}</div>
           </div>
         ))}
       </header>
