@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AnswerButton from "./components/AnswerButton";
 import Dialog from "./components/Dialog";
 import image from "./images/29ya069ug2f61.jpg";
@@ -18,6 +18,18 @@ export default function App() {
     },
   });
 
+  const [characters, setCharacters] = useState<
+    Array<{ id: string; name: string }>
+  >([]);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch("/characters");
+      const data = await response.json();
+      setCharacters(data);
+    })();
+  }, []);
+
   const handleMouseDownOnMain: React.MouseEventHandler = (event) => {
     if (event.button !== 0) {
       return;
@@ -30,14 +42,6 @@ export default function App() {
     if ((event.target as HTMLElement).tagName === "BUTTON") {
       return;
     }
-
-    console.clear();
-    console.log(
-      "X:",
-      event.nativeEvent.offsetX / (event.target as HTMLElement).clientWidth,
-      "Y:",
-      event.nativeEvent.offsetY / (event.target as HTMLElement).clientHeight
-    );
 
     setDialog({
       isShown: !dialog.isShown,
@@ -57,7 +61,6 @@ export default function App() {
       ...dialog,
       isShown: false,
     });
-    console.log(name);
     const url = `/characters?name=${name}&x_coordinate=${
       dialog.clickLocation.x / dialog.imageSize.width
     }&y_coordinate=${dialog.clickLocation.y / dialog.imageSize.height}`;
@@ -79,10 +82,13 @@ export default function App() {
               clickLocation={dialog.clickLocation}
               imageSize={dialog.imageSize}
             >
-              <AnswerButton name="Waldo" onClick={handleAnswerClick} />
-              <AnswerButton name="Odlaw" onClick={handleAnswerClick} />
-              <AnswerButton name="Wizard" onClick={handleAnswerClick} />
-              <AnswerButton name="Wilma" onClick={handleAnswerClick} />
+              {characters.map((character) => (
+                <AnswerButton
+                  key={character.id}
+                  name={character.name}
+                  onClick={handleAnswerClick}
+                />
+              ))}
             </Dialog>
           )}
         </div>
