@@ -22,6 +22,8 @@ export default function App() {
     Array<{ id: string; name: string }>
   >([]);
 
+  const [isGameStarted, setIsGameStarted] = useState(false);
+
   useEffect(() => {
     (async () => {
       const response = await fetch("/characters");
@@ -80,54 +82,92 @@ export default function App() {
     return imageSource;
   };
 
+  const handleClickPlay = () => {
+    setIsGameStarted(true);
+  };
+
   return (
     <div onContextMenu={(e) => e.preventDefault()}>
-      <header className="relative flex justify-center gap-4 bg-neutral-900 p-4 text-neutral-400 sm:gap-4 md:gap-8">
-        {characters.map((character) => (
-          <div
-            key={character.id}
-            className="div flex w-16 flex-col items-center gap-4 sm:w-20"
+      {isGameStarted ? (
+        <>
+          <header className="relative flex justify-center gap-4 bg-neutral-900 p-4 text-neutral-400 sm:gap-4 md:gap-8">
+            {characters.map((character) => (
+              <div
+                key={character.id}
+                className="div flex w-16 flex-col items-center gap-4 sm:w-20"
+              >
+                <img src={imageFor(character.name)} alt="" className="" />
+                <div className="flex h-full w-full items-center justify-center text-center">
+                  {character.name}
+                </div>
+              </div>
+            ))}
+          </header>
+          <main
+            onMouseDown={handleMouseDownOnMain}
+            className="select-none bg-neutral-800 p-4 sm:p-20"
           >
-            <img src={imageFor(character.name)} alt="" className="" />
-            <div className="flex h-full w-full items-center justify-center text-center">
-              {character.name}
+            <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
+              <img src={image} alt="" draggable="false" />
+              {dialog.isShown && (
+                <Dialog
+                  clickLocation={dialog.clickLocation}
+                  imageSize={dialog.imageSize}
+                >
+                  {characters.map((character) => (
+                    <AnswerButton
+                      key={character.id}
+                      name={character.name}
+                      onClick={handleAnswerClick}
+                    />
+                  ))}
+                </Dialog>
+              )}
             </div>
-          </div>
-        ))}
-      </header>
-      <main
-        onMouseDown={handleMouseDownOnMain}
-        className="select-none bg-neutral-800 p-4 sm:p-20"
-      >
-        <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
-          <img src={image} alt="" draggable="false" />
-          {dialog.isShown && (
-            <Dialog
-              clickLocation={dialog.clickLocation}
-              imageSize={dialog.imageSize}
+          </main>
+          <footer className="bg-neutral-900 py-2 text-center text-neutral-400">
+            {`Artwork - `}
+            <a
+              href="https://www.artstation.com/artwork/KrkJnG"
+              target="_blank"
+              className="underline"
+              rel="noreferrer"
             >
+              {`"A.D. 2.222" by Egor Klyuchnyk`}
+            </a>
+          </footer>
+        </>
+      ) : (
+        <div className="flex min-h-screen items-center justify-center bg-neutral-800 text-neutral-400">
+          <div className="flex w-full flex-col items-center gap-16 p-4">
+            <div className="text-center text-4xl text-neutral-300">{`Where's ...`}</div>
+            <div className="grid max-w-sm grid-cols-2 justify-items-center gap-4 md:max-w-2xl md:grid-cols-4">
               {characters.map((character) => (
-                <AnswerButton
+                <div
                   key={character.id}
-                  name={character.name}
-                  onClick={handleAnswerClick}
-                />
+                  className="flex flex-col items-center gap-4 rounded-lg bg-neutral-700 p-4 shadow shadow-neutral-900"
+                >
+                  <img
+                    src={imageFor(character.name)}
+                    alt=""
+                    className="h-full w-full"
+                  />
+                  <div className="flex h-full w-full items-center justify-center text-center">
+                    {character.name}
+                  </div>
+                </div>
               ))}
-            </Dialog>
-          )}
+            </div>
+            <button
+              onClick={handleClickPlay}
+              type="button"
+              className="w-full max-w-[10rem] rounded-lg bg-neutral-700 py-2 text-xl text-neutral-300 shadow shadow-neutral-900 hover:bg-neutral-600 focus:bg-neutral-900"
+            >
+              Play
+            </button>
+          </div>
         </div>
-      </main>
-      <footer className="bg-neutral-900 py-2 text-center text-neutral-400">
-        {`Artwork - `}
-        <a
-          href="https://www.artstation.com/artwork/KrkJnG"
-          target="_blank"
-          className="underline"
-          rel="noreferrer"
-        >
-          {`"A.D. 2.222" by Egor Klyuchnyk`}
-        </a>
-      </footer>
+      )}
     </div>
   );
 }
