@@ -89,7 +89,9 @@ export default function App() {
             className="div flex w-16 flex-col items-center gap-4 sm:w-20"
           >
             <img src={imageFor(character.name)} alt="" className="" />
-            <div className="text-center">{character.name}</div>
+            <div className="flex h-full w-full items-center justify-center text-center">
+              {character.name}
+            </div>
           </div>
         ))}
       </header>
