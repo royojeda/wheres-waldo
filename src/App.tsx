@@ -41,16 +41,21 @@ export default function App() {
     })();
   }, []);
 
-  useEffect(() => {
-    console.table(foundCharacters);
-  }, [foundCharacters]);
-
   const notFoundCharacters = characters.filter(
     (character) =>
       !foundCharacters.some(
         (foundCharacter) => foundCharacter.id === character.id
       )
   );
+
+  useEffect(() => {
+    if (
+      foundCharacters.length &&
+      foundCharacters.length === characters.length
+    ) {
+      console.log("Game over!");
+    }
+  }, [characters, foundCharacters]);
 
   const handleMouseDownOnMain: React.MouseEventHandler = (event) => {
     if (event.button !== 0) {
