@@ -29,7 +29,7 @@ export default function Dialog({
   };
 
   return (
-    <div style={position} className="absolute flex gap-1">
+    <div style={position} className="absolute z-10 flex gap-1">
       <div
         style={size}
         className="border border-white bg-transparent sm:border-2"

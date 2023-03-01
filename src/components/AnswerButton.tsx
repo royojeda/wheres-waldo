@@ -8,7 +8,7 @@ export default function AnswerButton({ name, onClick }: AnswerButtonProps) {
     <button
       type="button"
       onClick={() => onClick(name)}
-      className="select-none bg-neutral-700 p-2 shadow-sm shadow-neutral-900 hover:bg-neutral-600 focus:bg-neutral-800"
+      className="select-none bg-neutral-700 p-1 text-[6px] shadow-sm shadow-neutral-900 hover:bg-neutral-600 focus:bg-neutral-800 sm:p-2 sm:text-sm"
     >
       {name}
     </button>
