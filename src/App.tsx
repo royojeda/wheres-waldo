@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import AnswerButton from "./components/AnswerButton";
 import Dialog from "./components/Dialog";
+import Marker from "./components/Marker";
 import image from "./images/29ya069ug2f61.jpg";
 
 export default function App() {
@@ -171,6 +172,13 @@ export default function App() {
                   ))}
                 </Dialog>
               )}
+              {foundCharacters.map((character) => (
+                <Marker
+                  key={character.id}
+                  imageSize={dialog.imageSize}
+                  character={character}
+                />
+              ))}
             </div>
           </main>
           <footer className="bg-neutral-900 py-2 text-center text-neutral-400">
