@@ -118,17 +118,33 @@ export default function App() {
       {isGameStarted ? (
         <>
           <header className="relative flex justify-center gap-4 bg-neutral-900 p-4 text-neutral-400 sm:gap-4 md:gap-8">
-            {characters.map((character) => (
-              <div
-                key={character.id}
-                className="div flex w-16 flex-col items-center gap-4 sm:w-20"
-              >
-                <img src={imageFor(character.name)} alt="" className="" />
-                <div className="flex h-full w-full items-center justify-center text-center">
-                  {character.name}
+            {characters.map((character) =>
+              notFoundCharacters.includes(character) ? (
+                <div
+                  key={character.id}
+                  className="div flex w-16 flex-col items-center gap-4 sm:w-20"
+                >
+                  <img src={imageFor(character.name)} alt="" className="" />
+                  <div className="flex h-full w-full items-center justify-center text-center">
+                    {character.name}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ) : (
+                <div
+                  key={character.id}
+                  className="div flex w-16 flex-col items-center gap-4 sm:w-20"
+                >
+                  <img
+                    src={imageFor(character.name)}
+                    alt=""
+                    className="brightness-[.25]"
+                  />
+                  <div className="flex h-full w-full items-center justify-center text-center text-green-400">
+                    {character.name}
+                  </div>
+                </div>
+              )
+            )}
           </header>
           <main
             onMouseDown={handleMouseDownOnMain}
