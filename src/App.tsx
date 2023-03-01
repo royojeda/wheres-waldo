@@ -19,10 +19,19 @@ export default function App() {
   });
 
   const [characters, setCharacters] = useState<
-    Array<{ id: string; name: string }>
+    Array<{ id: number; name: string }>
   >([]);
 
   const [isGameStarted, setIsGameStarted] = useState(false);
+
+  const [foundCharacters, setFoundCharacters] = useState<
+    Array<{
+      id: number;
+      name: string;
+      x_coordinate: number;
+      y_coordinate: number;
+    }>
+  >([]);
 
   useEffect(() => {
     (async () => {
@@ -31,6 +40,17 @@ export default function App() {
       setCharacters(data);
     })();
   }, []);
+
+  useEffect(() => {
+    console.table(foundCharacters);
+  }, [foundCharacters]);
+
+  const notFoundCharacters = characters.filter(
+    (character) =>
+      !foundCharacters.some(
+        (foundCharacter) => foundCharacter.id === character.id
+      )
+  );
 
   const handleMouseDownOnMain: React.MouseEventHandler = (event) => {
     if (event.button !== 0) {
@@ -67,8 +87,15 @@ export default function App() {
       dialog.clickLocation.x / dialog.imageSize.width
     }&y_coordinate=${dialog.clickLocation.y / dialog.imageSize.height}`;
     const response = await fetch(url);
-    const data = await response.json();
-    console.table(data);
+    const data: {
+      id: number;
+      name: string;
+      x_coordinate: number;
+      y_coordinate: number;
+    }[] = await response.json();
+    if (data.length) {
+      setFoundCharacters([...foundCharacters, data[0]]);
+    }
   };
 
   const imageFor = (imageName: string) => {
@@ -114,7 +141,7 @@ export default function App() {
                   clickLocation={dialog.clickLocation}
                   imageSize={dialog.imageSize}
                 >
-                  {characters.map((character) => (
+                  {notFoundCharacters.map((character) => (
                     <AnswerButton
                       key={character.id}
                       name={character.name}
