@@ -34,7 +34,7 @@ export default function Dialog({
         style={size}
         className="border border-white bg-transparent sm:border-2"
       />
-      <div className="flex min-w-max flex-col gap-1 bg-neutral-600 p-1  text-neutral-300">
+      <div className="flex h-fit min-w-max flex-col gap-1 bg-neutral-600  p-1 text-neutral-300">
         {children}
       </div>
     </div>
