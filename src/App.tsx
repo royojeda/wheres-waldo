@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AnswerButton from "./components/AnswerButton";
 import Dialog from "./components/Dialog";
 import Marker from "./components/Marker";
@@ -37,7 +37,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       const response = await fetch("/characters");
-      const data = await response.json();
+      const data: { id: number; name: string }[] = await response.json();
       setCharacters(data);
     })();
   }, []);
@@ -48,6 +48,8 @@ export default function App() {
         (foundCharacter) => foundCharacter.id === character.id
       )
   );
+
+  const gameIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (
@@ -115,7 +117,13 @@ export default function App() {
     return imageSource;
   };
 
-  const handleClickPlay = () => {
+  const handleClickPlay = async () => {
+    const response = await fetch("/games", {
+      method: "POST",
+    });
+    const data = await response.json();
+    console.log(data);
+    gameIdRef.current = data.id;
     setIsGameStarted(true);
   };
 
