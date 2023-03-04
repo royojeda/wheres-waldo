@@ -56,7 +56,19 @@ export default function App() {
       foundCharacters.length &&
       foundCharacters.length === characters.length
     ) {
-      console.log("Game over!");
+      const url = `/games/${gameIdRef.current}`;
+      const data = {
+        game: {
+          found_characters: foundCharacters,
+        },
+      };
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
     }
   }, [characters, foundCharacters]);
 
