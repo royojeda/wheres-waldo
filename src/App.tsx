@@ -95,14 +95,13 @@ export default function App() {
       dialog.clickLocation.x / dialog.imageSize.width
     }&y_coordinate=${dialog.clickLocation.y / dialog.imageSize.height}`;
     const response = await fetch(url);
-    const data: {
-      id: number;
-      name: string;
-      x_coordinate: number;
-      y_coordinate: number;
-    }[] = await response.json();
+    const data = await response.json();
     if (data.length) {
       setFoundCharacters([...foundCharacters, data[0]]);
+    } else if (data.error) {
+      console.table(data);
+    } else {
+      console.log("Incorrect!");
     }
   };
 
