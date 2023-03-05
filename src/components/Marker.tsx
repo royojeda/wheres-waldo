@@ -27,7 +27,7 @@ export default function Marker({ character, imageSize }: MarkerProps) {
   return (
     <div
       style={position}
-      className="absolute min-w-max rounded-md rounded-tl-none border bg-neutral-200 p-1 text-sm text-neutral-800 shadow shadow-neutral-900"
+      className="absolute min-w-max rounded-md rounded-tl-none border bg-neutral-200 p-0.5 text-[.5rem] text-neutral-800 shadow shadow-neutral-900 sm:p-1 sm:text-sm"
     >
       {character.name}
     </div>
