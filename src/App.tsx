@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import AnswerButton from "./components/AnswerButton";
 import Dialog from "./components/Dialog";
+import IncorrectMarker from "./components/IncorrectMarker";
 import Marker from "./components/Marker";
 import image from "./images/29ya069ug2f61.jpg";
 
@@ -49,7 +50,12 @@ export default function App() {
       )
   );
 
+  const [isIncorrectMarkerVisible, setIsIncorrectMarkerVisible] =
+    useState(false);
+
   const gameIdRef = useRef<number | null>(null);
+
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (
@@ -103,6 +109,10 @@ export default function App() {
       ...dialog,
       isShown: false,
     });
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    setIsIncorrectMarkerVisible(false);
     const url = `/characters?name=${name}&x_coordinate=${
       dialog.clickLocation.x / dialog.imageSize.width
     }&y_coordinate=${dialog.clickLocation.y / dialog.imageSize.height}`;
@@ -113,7 +123,10 @@ export default function App() {
     } else if (data.error) {
       console.table(data);
     } else {
-      console.log("Incorrect!");
+      setIsIncorrectMarkerVisible(true);
+      timerRef.current = setTimeout(() => {
+        setIsIncorrectMarkerVisible(false);
+      }, 1500);
     }
   };
 
@@ -133,7 +146,6 @@ export default function App() {
       method: "POST",
     });
     const data = await response.json();
-    console.log(data);
     gameIdRef.current = data.id;
     setIsGameStarted(true);
   };
@@ -198,6 +210,14 @@ export default function App() {
                   character={character}
                 />
               ))}
+              {isIncorrectMarkerVisible && (
+                <IncorrectMarker
+                  position={{
+                    left: dialog.clickLocation.x,
+                    top: dialog.clickLocation.y,
+                  }}
+                />
+              )}
             </div>
           </main>
           <footer className="bg-neutral-900 py-2 text-center text-neutral-400">
