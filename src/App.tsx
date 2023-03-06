@@ -5,6 +5,7 @@ import AnswerButton from "./components/AnswerButton";
 import Dialog from "./components/Dialog";
 import IncorrectMarker from "./components/IncorrectMarker";
 import Marker from "./components/Marker";
+import Modal from "./components/Modal";
 import image from "./images/29ya069ug2f61.jpg";
 
 export default function App() {
@@ -37,11 +38,13 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("/characters");
-      const data: { id: number; name: string }[] = await response.json();
-      setCharacters(data);
+      if (!isGameStarted) {
+        const response = await fetch("/characters");
+        const data: { id: number; name: string }[] = await response.json();
+        setCharacters(data);
+      }
     })();
-  }, []);
+  }, [isGameStarted]);
 
   const notFoundCharacters = characters.filter(
     (character) =>
@@ -57,25 +60,37 @@ export default function App() {
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [modal, setModal] = useState<{
+    isShown: boolean;
+    score: number | null;
+  }>({ isShown: false, score: null });
+
   useEffect(() => {
-    if (
-      foundCharacters.length &&
-      foundCharacters.length === characters.length
-    ) {
-      const url = `/games/${gameIdRef.current}`;
-      const data = {
-        game: {
-          found_characters: foundCharacters,
-        },
-      };
-      fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-    }
+    (async () => {
+      if (
+        foundCharacters.length &&
+        foundCharacters.length === characters.length
+      ) {
+        const url = `/games/${gameIdRef.current}`;
+        const putData = {
+          game: {
+            found_characters: foundCharacters,
+          },
+        };
+        const response = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(putData),
+        });
+        const data = await response.json();
+        setModal({
+          isShown: true,
+          score: data.score,
+        });
+      }
+    })();
   }, [characters, foundCharacters]);
 
   const handleMouseDownOnMain: React.MouseEventHandler = (event) => {
@@ -148,6 +163,28 @@ export default function App() {
     const data = await response.json();
     gameIdRef.current = data.id;
     setIsGameStarted(true);
+  };
+
+  const handleSubmitName = (player_name: string) => {
+    setModal({
+      ...modal,
+      isShown: false,
+    });
+    setFoundCharacters([]);
+    setIsGameStarted(false);
+    const url = `/games/${gameIdRef.current}`;
+    const putData = {
+      game: {
+        player_name,
+      },
+    };
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(putData),
+    });
   };
 
   return (
@@ -231,6 +268,9 @@ export default function App() {
               {`"A.D. 2.222" by Egor Klyuchnyk`}
             </a>
           </footer>
+          {modal.isShown && modal.score && (
+            <Modal score={modal.score} onSubmit={handleSubmitName} />
+          )}
         </>
       ) : (
         <div className="flex min-h-screen items-center justify-center bg-neutral-800 text-neutral-400">
