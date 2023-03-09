@@ -191,38 +191,44 @@ export default function App() {
     <div onContextMenu={(e) => e.preventDefault()}>
       {isGameStarted ? (
         <>
-          <header className="relative flex justify-center gap-4 bg-neutral-900 p-4 text-neutral-400 sm:gap-4 md:gap-8">
-            {characters.map((character) =>
-              notFoundCharacters.includes(character) ? (
-                <div
-                  key={character.id}
-                  className="div flex w-16 flex-col items-center gap-4 sm:w-20"
-                >
-                  <img src={imageFor(character.name)} alt="" className="" />
-                  <div className="flex h-full w-full items-center justify-center text-center">
-                    {character.name}
+          <section className="fixed inset-x-0 top-0 z-10 flex items-center justify-center bg-neutral-900 p-4 text-neutral-400 shadow-md shadow-neutral-900 sm:inset-y-0 sm:left-0 sm:right-auto">
+            <div className="grid grid-cols-4 justify-items-center gap-4 text-xs sm:grid-cols-1 sm:text-base">
+              {characters.map((character) =>
+                notFoundCharacters.includes(character) ? (
+                  <div
+                    key={character.id}
+                    className="div flex w-min flex-col items-center gap-4"
+                  >
+                    <img
+                      src={imageFor(character.name)}
+                      alt=""
+                      className="max-w-[5rem]"
+                    />
+                    <div className="flex items-center justify-center text-center">
+                      {character.name}
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div
-                  key={character.id}
-                  className="div flex w-16 flex-col items-center gap-4 sm:w-20"
-                >
-                  <img
-                    src={imageFor(character.name)}
-                    alt=""
-                    className="brightness-[.25]"
-                  />
-                  <div className="flex h-full w-full items-center justify-center text-center text-green-400">
-                    {character.name}
+                ) : (
+                  <div
+                    key={character.id}
+                    className="div flex w-16 flex-col items-center gap-4 sm:w-20"
+                  >
+                    <img
+                      src={imageFor(character.name)}
+                      alt=""
+                      className="brightness-[.25]"
+                    />
+                    <div className="flex h-full w-full items-center justify-center text-center text-green-400">
+                      {character.name}
+                    </div>
                   </div>
-                </div>
-              )
-            )}
-          </header>
+                )
+              )}
+            </div>
+          </section>
           <main
             onMouseDown={handleMouseDownOnMain}
-            className="select-none bg-neutral-800 p-4 sm:p-20"
+            className="mt-[9rem] select-none bg-neutral-800 p-4 sm:mt-0 sm:ml-[7rem] lg:p-20"
           >
             <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
               <img src={image} alt="" draggable="false" />
