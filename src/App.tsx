@@ -85,6 +85,7 @@ export default function App() {
           body: JSON.stringify(putData),
         });
         const data = await response.json();
+        document.body.style.overflow = "hidden";
         setModal({
           isShown: true,
           score: data.score,
