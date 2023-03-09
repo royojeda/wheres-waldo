@@ -193,7 +193,7 @@ export default function App() {
       {isGameStarted ? (
         <>
           <section className="fixed inset-x-0 top-0 z-10 flex items-center justify-center bg-neutral-900 p-4 text-neutral-400 shadow-md shadow-neutral-900 sm:inset-y-0 sm:left-0 sm:right-auto">
-            <div className="grid grid-cols-4 justify-items-center gap-2 text-xs sm:grid-cols-1 sm:gap-8 sm:text-base">
+            <div className="grid grid-cols-4 justify-items-center text-xs sm:grid-cols-1 sm:gap-8 sm:text-base">
               {characters.map((character) =>
                 notFoundCharacters.includes(character) ? (
                   <div
@@ -205,7 +205,7 @@ export default function App() {
                       alt=""
                       className="max-w-[4rem] sm:max-w-[5rem]"
                     />
-                    <div className="flex h-full w-full min-w-max items-center justify-center text-center">
+                    <div className="flex h-full w-full min-w-max items-center justify-center text-center sm:min-w-0">
                       {character.name}
                     </div>
                   </div>
