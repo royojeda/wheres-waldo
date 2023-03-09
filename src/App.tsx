@@ -219,7 +219,7 @@ export default function App() {
                       alt=""
                       className="max-w-[4rem] brightness-[.25] sm:max-w-[5rem]"
                     />
-                    <div className="flex h-full w-full min-w-max items-center justify-center text-center text-green-300">
+                    <div className="flex h-full w-full min-w-max items-center justify-center text-center text-green-200 sm:min-w-0">
                       {character.name}
                     </div>
                   </div>
