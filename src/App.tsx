@@ -166,26 +166,31 @@ export default function App() {
     setIsGameStarted(true);
   };
 
-  const handleSubmitName = (player_name: string) => {
+  const handleSubmitName = async (player_name: string) => {
     setModal({
       ...modal,
       isShown: false,
     });
     setFoundCharacters([]);
-    setIsGameStarted(false);
     const url = `/games/${gameIdRef.current}`;
     const putData = {
       game: {
         player_name,
       },
     };
-    fetch(url, {
+    await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(putData),
     });
+    document.body.style.overflow = "auto";
+    const scoresUrl = "/games";
+    const response = await fetch(scoresUrl);
+    const data = await response.json();
+    console.table(data);
+    setIsGameStarted(false);
   };
 
   return (
