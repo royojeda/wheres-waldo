@@ -69,34 +69,8 @@ export default function App() {
     isShown: boolean;
     values: { id: number; player_name: string; score: number }[];
   }>({
-    isShown: true,
-    values: [
-      {
-        id: 142,
-        player_name: "asd",
-        score: 9.42865,
-      },
-      {
-        id: 143,
-        player_name: "12123123",
-        score: 11.769345,
-      },
-      {
-        id: 144,
-        player_name: "asdf",
-        score: 12.255938,
-      },
-      {
-        id: 113,
-        player_name: "1",
-        score: 15.786952,
-      },
-      {
-        id: 140,
-        player_name: "qweqweqwe",
-        score: 17.867079,
-      },
-    ],
+    isShown: false,
+    values: [],
   });
 
   useEffect(() => {
@@ -219,13 +193,16 @@ export default function App() {
       },
       body: JSON.stringify(putData),
     });
-    document.body.style.overflow = "auto";
     const scoresUrl = "/games";
     const response = await fetch(scoresUrl);
     const data = await response.json();
-    console.table(data);
+    setScores({ values: data, isShown: true });
+  };
+
+  const handlePlayAgain: React.MouseEventHandler = () => {
+    document.body.style.overflow = "auto";
     setIsGameStarted(false);
-    setScores({ ...scores, isShown: true });
+    setScores({ ...scores, isShown: false });
   };
 
   return (
@@ -356,6 +333,7 @@ export default function App() {
                 </div>
                 <button
                   type="button"
+                  onClick={handlePlayAgain}
                   className="w-fit rounded-lg border border-neutral-900 bg-neutral-800 px-4 py-2 shadow shadow-neutral-900 hover:bg-neutral-700 focus:bg-neutral-900"
                 >
                   Play again
