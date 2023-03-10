@@ -246,7 +246,7 @@ export default function App() {
           </section>
           <main
             onMouseDown={handleMouseDownOnMain}
-            className="mt-[7.5rem] select-none bg-neutral-800 p-4 sm:mt-0 sm:ml-[7rem] lg:p-20"
+            className="mt-[7.5rem] select-none bg-neutral-800 p-4 sm:mt-0 sm:ml-[7rem] sm:p-20"
           >
             <div className="relative mx-auto w-fit shadow-lg shadow-neutral-900">
               <img src={image} alt="" draggable="false" />
