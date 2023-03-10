@@ -319,17 +319,36 @@ export default function App() {
                     <div className="flex-1">Name</div>
                     <div className="w-14 sm:w-20">Time (s)</div>
                   </div>
-                  {scores.values.map((value, index) => (
-                    <div key={value.id} className="flex gap-4 py-2 px-4">
-                      <div className="w-10 break-all sm:w-12">{index + 1}</div>
-                      <div className="flex-1 break-all">
-                        {value.player_name}
+                  {scores.values.map((value, index) =>
+                    value.id === gameIdRef.current ? (
+                      <div
+                        key={value.id}
+                        className="flex gap-4 bg-green-800 py-2 px-4"
+                      >
+                        <div className="w-10 break-all sm:w-12">
+                          {index + 1}
+                        </div>
+                        <div className="flex-1 break-all">
+                          {value.player_name}
+                        </div>
+                        <div className="w-14 break-all sm:w-20">
+                          {value.score.toFixed(2)}
+                        </div>
                       </div>
-                      <div className="w-14 break-all sm:w-20">
-                        {value.score.toFixed(2)}
+                    ) : (
+                      <div key={value.id} className="flex gap-4 py-2 px-4">
+                        <div className="w-10 break-all sm:w-12">
+                          {index + 1}
+                        </div>
+                        <div className="flex-1 break-all">
+                          {value.player_name}
+                        </div>
+                        <div className="w-14 break-all sm:w-20">
+                          {value.score.toFixed(2)}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
                 <button
                   type="button"
