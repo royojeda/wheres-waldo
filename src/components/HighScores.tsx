@@ -24,8 +24,8 @@ export default function HighScores({
   onButtonClick,
 }: HighScoresProps) {
   return (
-    <div className="fixed inset-0 z-20 flex items-center justify-center bg-neutral-800/95">
-      <div className="flex flex-col items-center gap-8 rounded-lg bg-neutral-700 p-4 text-neutral-300 shadow-lg shadow-neutral-900 sm:p-8">
+    <div className="fixed inset-0 z-20 flex overflow-y-auto bg-neutral-800/95 p-4">
+      <div className="m-auto flex flex-col items-center gap-8 rounded-lg bg-neutral-700 p-4 text-neutral-300 shadow-lg shadow-neutral-900 sm:p-8">
         <div className="text-center text-2xl">High scores</div>
         <div className="flex w-full flex-col divide-y divide-neutral-500 overflow-hidden rounded-lg border border-neutral-500 text-center text-sm sm:text-base">
           <div className="flex items-center gap-4 bg-neutral-600 px-4 py-2 font-semibold sm:text-lg">
