@@ -317,7 +317,7 @@ export default function App() {
                   <img
                     src={imageFor(character.name)}
                     alt=""
-                    className="h-full w-full"
+                    className="h-auto w-full"
                   />
                   <div className="flex h-full w-full items-center justify-center text-center">
                     {character.name}
