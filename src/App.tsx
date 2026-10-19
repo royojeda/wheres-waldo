@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import AnswerButton from "./components/AnswerButton";
 import Dialog from "./components/Dialog";
+import HighScores from "./components/HighScores";
 import IncorrectMarker from "./components/IncorrectMarker";
 import Marker from "./components/Marker";
 import Modal from "./components/Modal";
@@ -174,6 +175,16 @@ export default function App() {
     setIsGameStarted(true);
   };
 
+  const showHighScores = async () => {
+    const response = await fetch("/games");
+    const data = await response.json();
+    setScores({ values: data, isShown: true });
+  };
+
+  const handleCloseHighScores: React.MouseEventHandler = () => {
+    setScores({ ...scores, isShown: false });
+  };
+
   const handleSubmitName = async (player_name: string) => {
     setModal({
       ...modal,
@@ -193,10 +204,7 @@ export default function App() {
       },
       body: JSON.stringify(putData),
     });
-    const scoresUrl = "/games";
-    const response = await fetch(scoresUrl);
-    const data = await response.json();
-    setScores({ values: data, isShown: true });
+    await showHighScores();
   };
 
   const handlePlayAgain: React.MouseEventHandler = () => {
@@ -295,75 +303,10 @@ export default function App() {
           {modal.isShown && modal.score && (
             <Modal score={modal.score} onSubmit={handleSubmitName} />
           )}
-          {scores.isShown && (
-            <div className="fixed inset-0 z-20 flex items-center justify-center bg-neutral-800/95">
-              <div className="flex flex-col items-center gap-8 rounded-lg bg-neutral-700 p-4 text-neutral-300 shadow-lg shadow-neutral-900 sm:p-8">
-                <div className="text-center text-2xl">{`High scores for `}</div>
-                <div className="flex gap-4">
-                  {characters.map((character) => (
-                    <div
-                      key={character.id}
-                      className="div flex w-min flex-col items-center gap-2"
-                    >
-                      <img
-                        src={imageFor(character.name)}
-                        alt=""
-                        className="max-w-[3.5rem] sm:max-w-[5rem]"
-                      />
-                    </div>
-                  ))}
-                </div>
-                <div className="flex w-full flex-col divide-y divide-neutral-500 overflow-hidden rounded-lg border border-neutral-500 text-center text-sm sm:text-base">
-                  <div className="flex items-center gap-4 bg-neutral-600 py-2 px-4 font-semibold sm:text-lg">
-                    <div className="w-10 sm:w-12">Rank</div>
-                    <div className="flex-1">Name</div>
-                    <div className="w-14 sm:w-20">Time (s)</div>
-                  </div>
-                  {scores.values.map((value, index) =>
-                    value.id === gameIdRef.current ? (
-                      <div
-                        key={value.id}
-                        className="flex gap-4 bg-green-800 py-2 px-4"
-                      >
-                        <div className="w-10 break-all sm:w-12">
-                          {index + 1}
-                        </div>
-                        <div className="flex-1 break-all">
-                          {value.player_name}
-                        </div>
-                        <div className="w-14 break-all sm:w-20">
-                          {value.score.toFixed(2)}
-                        </div>
-                      </div>
-                    ) : (
-                      <div key={value.id} className="flex gap-4 py-2 px-4">
-                        <div className="w-10 break-all sm:w-12">
-                          {index + 1}
-                        </div>
-                        <div className="flex-1 break-all">
-                          {value.player_name}
-                        </div>
-                        <div className="w-14 break-all sm:w-20">
-                          {value.score.toFixed(2)}
-                        </div>
-                      </div>
-                    )
-                  )}
-                </div>
-                <button
-                  type="button"
-                  onClick={handlePlayAgain}
-                  className="w-fit rounded-lg border border-neutral-900 bg-neutral-800 px-4 py-2 shadow shadow-neutral-900 hover:bg-neutral-700 focus:bg-neutral-900"
-                >
-                  Play again
-                </button>
-              </div>
-            </div>
-          )}
         </>
       ) : (
-        <div className="flex min-h-screen items-center justify-center bg-neutral-800 text-neutral-400">
-          <div className="flex w-full flex-col items-center gap-16 p-4">
+        <div className="flex min-h-screen flex-col bg-neutral-800 text-neutral-400">
+          <div className="flex w-full flex-1 flex-col items-center justify-center gap-16 p-4">
             <div className="text-center text-4xl text-neutral-300">{`Where's ...`}</div>
             <div className="grid max-w-sm grid-cols-2 justify-items-center gap-4 md:max-w-2xl md:grid-cols-4">
               {characters.map((character) => (
@@ -390,7 +333,26 @@ export default function App() {
               Play
             </button>
           </div>
+          <footer className="flex justify-center p-4">
+            <button
+              onClick={showHighScores}
+              type="button"
+              className="w-full max-w-[10rem] rounded-lg bg-neutral-700 py-2 text-neutral-300 shadow shadow-neutral-900 hover:bg-neutral-600 focus:bg-neutral-900"
+            >
+              High scores
+            </button>
+          </footer>
         </div>
+      )}
+      {scores.isShown && (
+        <HighScores
+          scores={scores.values}
+          highlightedGameId={isGameStarted ? gameIdRef.current : null}
+          buttonLabel={isGameStarted ? "Play again" : "Close"}
+          onButtonClick={
+            isGameStarted ? handlePlayAgain : handleCloseHighScores
+          }
+        />
       )}
     </div>
   );
