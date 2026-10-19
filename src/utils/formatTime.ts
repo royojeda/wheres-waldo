@@ -1,4 +1,4 @@
-// Formats a duration in seconds like a stopwatch: "8.20s", "1:05.32", "1:02:05.50".
+// Formats a duration in seconds like a stopwatch: "8.20 s", "1:05.32", "1:02:05.50".
 export default function formatTime(seconds: number): string {
   const totalCentiseconds = Math.round(seconds * 100);
   const hours = Math.floor(totalCentiseconds / 360000);
@@ -13,5 +13,6 @@ export default function formatTime(seconds: number): string {
   if (minutes) {
     return `${minutes}:${paddedSeconds}`;
   }
-  return `${secondsPart}s`;
+  // Non-breaking space keeps the unit on the same line as the number.
+  return `${secondsPart}\u00A0s`;
 }
