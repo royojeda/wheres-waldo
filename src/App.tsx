@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import AnswerButton from "./components/AnswerButton";
 import Dialog from "./components/Dialog";
-import HighScores from "./components/HighScores";
+import HighScores, { Score } from "./components/HighScores";
 import IncorrectMarker from "./components/IncorrectMarker";
 import Marker from "./components/Marker";
 import Modal from "./components/Modal";
@@ -68,7 +68,7 @@ export default function App() {
 
   const [scores, setScores] = useState<{
     isShown: boolean;
-    values: { id: number; player_name: string; score: number }[];
+    values: Score[];
   }>({
     isShown: false,
     values: [],

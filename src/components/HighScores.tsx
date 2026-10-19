@@ -1,9 +1,17 @@
+import { Fragment } from "react";
 import formatTime from "../utils/formatTime";
 
 const medalColors = ["bg-yellow-400", "bg-slate-300", "bg-amber-600"];
 
+export interface Score {
+  id: number;
+  player_name: string;
+  rank: number;
+  score: number;
+}
+
 interface HighScoresProps {
-  scores: { id: number; player_name: string; score: number }[];
+  scores: Score[];
   highlightedGameId: number | null;
   buttonLabel: string;
   onButtonClick: React.MouseEventHandler;
@@ -27,28 +35,34 @@ export default function HighScores({
           </div>
           {scores.length ? (
             scores.map((value, index) => (
-              <div
-                key={value.id}
-                className={`flex items-center gap-4 px-4 py-2 ${
-                  value.id === highlightedGameId ? "bg-green-800" : ""
-                }`}
-              >
-                <div className="flex w-10 justify-center sm:w-12">
-                  {medalColors[index] ? (
-                    <span
-                      className={`flex h-6 w-6 items-center justify-center rounded-full font-semibold text-neutral-900 ${medalColors[index]}`}
-                    >
-                      {index + 1}
-                    </span>
-                  ) : (
-                    index + 1
-                  )}
+              <Fragment key={value.id}>
+                {index > 0 && value.rank > scores[index - 1].rank + 1 && (
+                  <div className="px-4 py-1 text-neutral-500">⋯</div>
+                )}
+                <div
+                  className={`flex items-center gap-4 px-4 py-2 ${
+                    value.id === highlightedGameId ? "bg-green-800" : ""
+                  }`}
+                >
+                  <div className="flex w-10 justify-center sm:w-12">
+                    {medalColors[value.rank - 1] ? (
+                      <span
+                        className={`flex h-6 w-6 items-center justify-center rounded-full font-semibold text-neutral-900 ${
+                          medalColors[value.rank - 1]
+                        }`}
+                      >
+                        {value.rank}
+                      </span>
+                    ) : (
+                      value.rank
+                    )}
+                  </div>
+                  <div className="flex-1 break-all">{value.player_name}</div>
+                  <div className="w-20 whitespace-nowrap tabular-nums sm:w-24">
+                    {formatTime(value.score)}
+                  </div>
                 </div>
-                <div className="flex-1 break-all">{value.player_name}</div>
-                <div className="w-20 whitespace-nowrap tabular-nums sm:w-24">
-                  {formatTime(value.score)}
-                </div>
-              </div>
+              </Fragment>
             ))
           ) : (
             <div className="px-4 py-2">No scores yet</div>
