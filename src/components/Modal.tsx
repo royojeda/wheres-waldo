@@ -16,7 +16,7 @@ export default function Modal({ score, onSubmit }: ModalProps) {
 
   const handleSubmit: React.FormEventHandler = (event) => {
     event.preventDefault();
-    onSubmit(name);
+    onSubmit(name.trim());
   };
 
   return (
@@ -32,6 +32,8 @@ export default function Modal({ score, onSubmit }: ModalProps) {
             value={name}
             onChange={handleInputChange}
             required
+            pattern=".*\S.*"
+            title="Your name can't be only spaces."
             maxLength={10}
             placeholder="Please enter your name"
             // eslint-disable-next-line jsx-a11y/no-autofocus
