@@ -1,5 +1,7 @@
 import formatTime from "../utils/formatTime";
 
+const medalColors = ["bg-yellow-400", "bg-slate-300", "bg-amber-600"];
+
 interface HighScoresProps {
   scores: { id: number; player_name: string; score: number }[];
   highlightedGameId: number | null;
@@ -27,13 +29,23 @@ export default function HighScores({
             scores.map((value, index) => (
               <div
                 key={value.id}
-                className={`flex gap-4 px-4 py-2 ${
+                className={`flex items-center gap-4 px-4 py-2 ${
                   value.id === highlightedGameId ? "bg-green-800" : ""
                 }`}
               >
-                <div className="w-10 break-all sm:w-12">{index + 1}</div>
+                <div className="flex w-10 justify-center sm:w-12">
+                  {medalColors[index] ? (
+                    <span
+                      className={`flex h-6 w-6 items-center justify-center rounded-full font-semibold text-neutral-900 ${medalColors[index]}`}
+                    >
+                      {index + 1}
+                    </span>
+                  ) : (
+                    index + 1
+                  )}
+                </div>
                 <div className="flex-1 break-all">{value.player_name}</div>
-                <div className="w-20 break-all sm:w-24">
+                <div className="w-20 whitespace-nowrap tabular-nums sm:w-24">
                   {formatTime(value.score)}
                 </div>
               </div>
