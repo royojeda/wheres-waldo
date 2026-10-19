@@ -1,3 +1,5 @@
+import formatTime from "../utils/formatTime";
+
 interface HighScoresProps {
   scores: { id: number; player_name: string; score: number }[];
   highlightedGameId: number | null;
@@ -19,7 +21,7 @@ export default function HighScores({
           <div className="flex items-center gap-4 bg-neutral-600 px-4 py-2 font-semibold sm:text-lg">
             <div className="w-10 sm:w-12">Rank</div>
             <div className="flex-1">Name</div>
-            <div className="w-14 sm:w-20">Time (s)</div>
+            <div className="w-20 sm:w-24">Time</div>
           </div>
           {scores.length ? (
             scores.map((value, index) => (
@@ -31,8 +33,8 @@ export default function HighScores({
               >
                 <div className="w-10 break-all sm:w-12">{index + 1}</div>
                 <div className="flex-1 break-all">{value.player_name}</div>
-                <div className="w-14 break-all sm:w-20">
-                  {value.score.toFixed(2)}
+                <div className="w-20 break-all sm:w-24">
+                  {formatTime(value.score)}
                 </div>
               </div>
             ))

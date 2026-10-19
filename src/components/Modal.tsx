@@ -1,4 +1,5 @@
 import { useState } from "react";
+import formatTime from "../utils/formatTime";
 
 interface ModalProps {
   score: number;
@@ -23,7 +24,9 @@ export default function Modal({ score, onSubmit }: ModalProps) {
     <div className="fixed inset-0 z-20 flex items-center justify-center bg-neutral-800/95">
       <div className="items-center1 flex flex-col gap-4 rounded-lg bg-neutral-700 p-4 text-neutral-300 shadow-lg shadow-neutral-900 sm:p-8">
         <div className="text-2xl">Congratulations!</div>
-        <div className="text-lg">You finished a game in {score} seconds!</div>
+        <div className="text-lg">
+          You finished a game in {formatTime(score)}!
+        </div>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
             type="text"
